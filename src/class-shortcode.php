@@ -190,8 +190,6 @@ class Shortcode {
 	/**
 	 * Analyse the WP_Post related to the $_GET['post_id'] we received, and determine if
 	 * this specific post should be used for this ACF form request.
-	 * You could add here any necessary permission to validate or invalidate an "edit form" request,
-	 * such as checking for current user permission to edit this post.
 	 *
 	 * @return boolean Whether the requested post can be edited.
 	 */
@@ -202,15 +200,17 @@ class Shortcode {
 	/**
 	 * Can we continue current post/form edition?
 	 * I added this method to offer a granular way to authorize the current multi-steps form edition.
-	 * Maybe analyze a token passed in URL to determine if it matches a post meta, so that continuing
-	 * the form edition can not be done by anyone passing a random $_GET['post_id] parameter.
+	 * In our case, we analyze a token passed in URL to determine if it matches a post meta, so that continuing
+	 * the form edition can not be done by anyone passing a random $_GET['post_id] parameter without its correct secret token.
+	 * Any logged-in user verification could be done here.
 	 * 
 	 * @return boolean If the current multiform edition should continue, or should we discard it and initiate a "new post" form.
 	 */
 	private function can_continue_current_multiform() {
-		return true;
+		if ( ! isset( $_GET['token'] ) ) {
+			return false;
+		}
 
-		// Here is an untested example.
 		$token_from_url       = sanitize_text_field( $_GET['token'] );
 		$token_from_post_meta = get_post_meta( (int) $_GET['post_id'], 'secret_token', true );
 
@@ -261,10 +261,9 @@ class Shortcode {
 				true
 			);
 
-			if ( is_wp_error( $updated_post ) ) {
-				// Something went wrong when trying to update the post.
-				wp_die( __( 'We could not process your request :(' ) );
-			}
+			// Generate a secret token that will be required in URL to continue this form flow and edit this specific WP_Post.
+			$token = wp_generate_password( rand( 10, 20 ), false, false );
+			update_post_meta( (int) $post_id, 'secret_token', $token );
 		}
 
 		// First and middle steps: we are "editing" the post but user has not yet finished the entire flow.
@@ -273,6 +272,7 @@ class Shortcode {
 			$query_args = [
 				'step'    => ++$current_step,
 				'post_id' => $post_id,
+				'token'   => isset( $token ) ? $token : $_GET['token'],
 			];
 
 		// Final step: maybe add an admin email to a queue, change post_status... Anything, really!
