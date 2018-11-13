@@ -16,7 +16,7 @@ The form displayed below uses an enhanced version of `acf_form()`; it has a tota
 The first step is composed of two ACF fields groups, while the two other steps display only one single field group each.
 
 _(Click the image below to see a slower video showing the final result in back-office.)_
-[![Watch a detailed video](https://mosaika.fr/wip/acf-multiforms-example-front-end.gif)](http://media.mosaika.fr/5922216e1b55)
+[![Watch a detailed video](https://mosaika.fr/wip/acf-multiforms-example-front-end.gif)](http://media.mosaika.fr/b39c84306513)
 
 ### Post data in the back-office
 Nothing new here actually :) 
