@@ -114,7 +114,13 @@ class Shortcode {
 		// Optional: display a custom message before the form.
 		$this->display_custom_message_before_form( $args );
 
-		// Display the form.
+		/**
+		 * Display the form with acf_form().
+		 *
+		 * The key here is to tell ACF which fields groups (metaboxes) we want to display,
+		 * depending on the current form step we are at.
+		 * This is done via the "field_groups" parameter below.
+		 */
 		acf_form(
 			[
 				'id' 				=> $this->id,
