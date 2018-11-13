@@ -139,17 +139,17 @@ class Shortcode {
 	private function display_custom_message_before_form( $args ) {
 		if ( $args['post_id'] === 'new_post' ) {
 			$message = __( 'Welcome to this form! This custom message should be different depending on the current step you are at.' );
-		}
+		} else {
+			switch ( $args['step'] ) {
+				case 2:
+				default:
+					$message = sprintf( __( 'Hi %1$s, thanks for your interest! Please give us some more details :)' ), get_field( 'full_name', (int) $args['post_id'] ) );
+					break;
 
-		switch ( $args['step'] ) {
-			case 2:
-			default:
-				$message = sprintf( __( 'Hi %1$s, thanks for your interest! Please give us some more details :)' ), get_field( 'full_name', (int) $args['post_id'] ) );
-				break;
-
-			case 3:
-				$message = sprintf( __( 'Thanks %1$s! That is the last step.' ), get_field( 'full_name', (int) $args['post_id'] ) );
-				break;
+				case 3:
+					$message = sprintf( __( 'Thanks %1$s! That is the last step.' ), get_field( 'full_name', (int) $args['post_id'] ) );
+					break;
+			}
 		}
 
 		if ( $message ) {
