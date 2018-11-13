@@ -8,6 +8,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use ACF_Multiforms_Example\Utils;
 
+/**
+ * Output our [acf_multiforms_example] shortcode and process the ACF front-end form.
+ */
 class Shortcode {
 	/**
 	 * Our form ID, used internally to identify this specific ACF front-end form.

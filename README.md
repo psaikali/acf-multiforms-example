@@ -5,7 +5,8 @@
 
 This proof-of-concept has been created in order to explain **how to use multiple ACF fields groups to display a multi-steps front-end form**.
 
-Head to [the `class-shortcode.php` file](/src/class-shortcode.php) to discover the main logic behind this.
+Head to [the `class-shortcode.php` file](/src/class-shortcode.php) to discover the main logic behind this. This is the main file in charge of outputting our `[acf_multiforms_example]` shortcode and doing the necessary magic when processing the form with `acf/save_post`. 
+It is heavily documented to explain how things work.
 
 ## Demo
 
@@ -24,6 +25,3 @@ In the back-office, [ACF `acf_form()`](https://www.advancedcustomfields.com/reso
 Notice that the first two metaboxes below are the ones displayed in the first step of the front-end form.
 
 ![Post back-end](https://mosaika.fr/wip/acf-multiforms-example-back-end.jpg)
-
-## Technical details
-_todo_
