@@ -70,6 +70,10 @@ class Shortcode {
 	public function output_shortcode() {
 		ob_start();
 
+		if ( ! function_exists( 'acf_form' ) ) {
+			return;
+		}
+
 		// User is currently filling the form, we display it.
 		if ( ! $this->current_multiform_is_finished() ) {
 			$this->output_acf_form( [
