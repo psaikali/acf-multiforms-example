@@ -232,8 +232,12 @@ class Shortcode {
 	 * @return int Current step, fallback to 1 (first set of metaboxes).
 	 */
 	private function get_request_step() {
-		if ( isset( $_REQUEST['step'] ) && absint( $_REQUEST['step'] ) <= count( $this->metabox_ids ) ) {
-			return absint( $_REQUEST['step'] );
+		if ( isset( $_POST['ame-current-step'] ) && absint( $_POST['ame-current-step'] ) <= count( $this->metabox_ids ) ) {
+			return absint( $_POST['ame-current-step'] );
+		}
+
+		else if ( isset( $_GET['step'] ) && absint( $_GET['step'] ) <= count( $this->metabox_ids ) ) {
+			return absint( $_GET['step'] );
 		}
 
 		return 1;
